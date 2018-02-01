@@ -4,8 +4,8 @@
     <div class="bg-black-80 pb5 pb6-m pb7-l">
       <nav class="dt w-100 mw8 center">
         <div class="dtc w2 v-mid pa3">
-          <a href="/" class="dib w2 h2 pa1 ba b--white-90 grow-large border-box">
-            <img class="link br1 h2 w2 dib" :src="logo" >
+          <a href="/" class="dib w2 h2 grow-large border-box">
+            <img class="link h2 w2 dib" :src="logo" >
           </a>
         </div>
         <div class="dtc v-mid tr pa3">
@@ -33,10 +33,10 @@
 import logo from '../assets/logo.png'
 var QRCode = require('qrcode')
 export default {
-  logo,
   data () {
     return {
-      qrcode: ''
+      qrcode: '',
+      logo
     }
   },
   created () {
