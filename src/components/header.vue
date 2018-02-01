@@ -5,7 +5,7 @@
       <nav class="dt w-100 mw8 center">
         <div class="dtc w2 v-mid pa3">
           <a href="/" class="dib w2 h2 pa1 ba b--white-90 grow-large border-box">
-            <img class="link" src="/static/assets/logo.png" >
+            <img class="link" :src="logo" >
           </a>
         </div>
         <div class="dtc v-mid tr pa3">
@@ -29,8 +29,9 @@
 </template>
 
 <script>
+import logo from '../assets/logo.png'
 export default {
-
+  logo
 }
 </script>
 
