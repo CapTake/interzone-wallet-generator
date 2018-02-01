@@ -1,0 +1,29 @@
+{
+  "name": "itzwg",
+  "version": "1.0.0",
+  "description": "Interzone (ITZ) wallet generator",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CapTake/interzone-wallet-generator.git"
+  },
+  "keywords": [
+    "Interzone",
+    "ITZ",
+    "paper",
+    "wallet",
+    "crypto",
+    "wallet",
+    "generator",
+    "cryptocurrency"
+  ],
+  "author": "CapTake",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CapTake/interzone-wallet-generator/issues"
+  },
+  "homepage": "https://github.com/CapTake/interzone-wallet-generator#readme"
+}
