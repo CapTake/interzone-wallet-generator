@@ -5,7 +5,7 @@
       <nav class="dt w-100 mw8 center">
         <div class="dtc w2 v-mid pa3">
           <a href="/" class="dib w2 h2 pa1 ba b--white-90 grow-large border-box">
-            <img class="link" :src="logo" >
+            <img class="link br1 h2 w2 dib" :src="logo" >
           </a>
         </div>
         <div class="dtc v-mid tr pa3">
