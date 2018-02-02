@@ -9,6 +9,7 @@
 <script>
 // eslint-disable-next-line
 import tachions from 'tachyons'
+// import CryptoJS from 'cryptojs'
 import VHeader from '@/components/header'
 import Entropy from '@/components/Entropy'
 import Wallet from '@/components/Wallet'
@@ -17,7 +18,7 @@ export default {
   data () {
     return {
       page: Wallet,
-      count: 0,
+      nonce: 0,
       entropy: null
     }
   },

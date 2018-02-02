@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// import CryptoJS from 'cryptojs'
 import VProgress from '@/components/progress'
 export default {
   data () {
@@ -24,7 +25,8 @@ export default {
   computed: {
     entropy: {
       set (v) {
-        this.entropy_ += v.join('')
+        let hex = v.map(b => ('00' + b.toString(16)).slice(-2)).join('')
+        this.entropy_ = this.entropy_ + hex
       },
       get () {
         return this.entropy_
@@ -35,7 +37,7 @@ export default {
     VProgress
   },
   mounted () {
-    this.entropy = window.crypto.getRandomValues(new Int8Array(32))
+    this.entropy = Array.from(window.crypto.getRandomValues(new Uint8Array(64)))
     let toGo = 1000
     let f = (e) => {
       if (e.type === 'touchmove') {
