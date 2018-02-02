@@ -8,14 +8,15 @@
       <v-progress :percent="percent" />
     </div>
   </div>
-  <div class="w-100 pa3 f7" style="word-break: break-all;    word-wrap: break-word;">
-    {{ entropy }}
+  <div class="w-100 pa3 f5" style="word-break: break-all;    word-wrap: break-word;">
+    {{ hex }}
   </div>
 </div>
 </template>
 
 <script>
-// import CryptoJS from 'cryptojs'
+import {Buffer} from 'safe-buffer'
+import bitcoin from 'bitcoinjs-lib'
 import VProgress from '@/components/progress'
 export default {
   data () {
@@ -26,26 +27,31 @@ export default {
   },
   computed: {
     entropy: {
-      set (v) {
-        let hex = v.map(b => ('00' + b.toString(16)).slice(-2)).join('')
-        this.entropy_ = this.entropy_ + hex
+      set (buffer) {
+        let new_ = Buffer.from(buffer).toString() + this.entropy_
+
+        this.entropy_ = bitcoin.crypto.sha256(Buffer.from(new_))
       },
       get () {
         return this.entropy_
       }
+    },
+    hex () {
+      return this.entropy_.toString('hex')
     }
   },
   components: {
-    VProgress
+    VProgress,
+    bitcoin
   },
   mounted () {
-    this.entropy = Array.from(window.crypto.getRandomValues(new Uint8Array(64)))
+    this.entropy = new Buffer(Array.from(window.crypto.getRandomValues(new Uint8Array(32))))
     let toGo = 500
     let f = (e) => {
       if (e.type === 'touchmove') {
-        this.entropy = [e.touches[0].screenX % 4, e.touches[0].screenY % 4]
+        this.entropy = new Buffer([e.touches[0].screenX % 4, e.touches[0].screenY % 4])
       } else {
-        this.entropy = [e.screenX % 4, e.screenY % 4]
+        this.entropy = new Buffer([e.screenX % 4, e.screenY % 4])
       }
       toGo = Math.max(toGo - 1, 0)
       this.percent = (500 - toGo) / 5

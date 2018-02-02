@@ -1,7 +1,7 @@
 <template>
 <header class="sans-serif">
-  <div class="cover bg-left bg-center-l" style="background: #222">
-    <div class="bg-black-80 pb5 pb6-m pb7-l">
+  <div class="cover bg-left bg-center-l">
+    <div class="bg-black-90 pb3">
       <nav class="dt w-100 mw8 center">
         <div class="dtc w2 v-mid pa3">
           <a :href="url" class="dib w2 h2 grow-large border-box">
@@ -18,11 +18,7 @@
       </nav>
       <div class="tc-l mt4 mt5-m mt6-l ph3">
         <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">{{ name }} wallet generator</h1>
-        <h2 class="fw1 f3 white-80 mt3 mb4">Catchy subheadline where we explain your wonderful new startup even more</h2>
-        <img :src="qrcode" />
-        <a class="f6 no-underline grow dib v-mid bg-blue white ba b--blue ph3 pv2 mb3" href="/">Call to Action</a>
-        <span class="dib v-mid ph3 white-70 mb3">or</span>
-        <a class="f6 no-underline grow dib v-mid white ba b--white ph3 pv2 mb3" href="">Secondary call to action</a>
+        <h2 class="fw1 f3 white-80 mt3 mb4">{{ sub }}</h2>
       </div>
     </div>
   </div>
@@ -31,21 +27,12 @@
 
 <script>
 import logo from '../assets/logo.png'
-var QRCode = require('qrcode')
 export default {
-  props: ['name', 'url'],
+  props: ['name', 'url', 'sub'],
   data () {
     return {
-      qrcode: '',
       logo
     }
-  },
-  created () {
-    QRCode.toDataURL('2we5e56det572d5f7dcxgcv76552we').then(url => {
-      this.qrcode = url
-    }).catch(err => {
-      console.error(err.message)
-    })
   }
 }
 </script>
