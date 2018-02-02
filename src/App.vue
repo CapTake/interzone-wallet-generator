@@ -10,6 +10,7 @@
 // eslint-disable-next-line
 import tachions from 'tachyons'
 // import CryptoJS from 'cryptojs'
+import bitcoin from 'bitcoinjs-lib'
 import VHeader from '@/components/header'
 import Entropy from '@/components/Entropy'
 import Wallet from '@/components/Wallet'
@@ -19,7 +20,17 @@ export default {
     return {
       page: Wallet,
       nonce: 0,
-      entropy: null
+      entropy: null,
+      network: {
+        messagePrefix: '\x19Litecoin Signed Message:\n',
+        bip32: {
+          public: 0x019da462,
+          private: 0x019d9cfe
+        },
+        pubKeyHash: 0x3F,
+        scriptHash: 0x99,
+        wif: 0x99
+      }
     }
   },
   components: {
@@ -30,6 +41,10 @@ export default {
     entropyCollected (entropy) {
       this.entropy = entropy
     }
+  },
+  mounted () {
+    let ecp = bitcoin.ECPair.makeRandom({network: this.network})
+    console.log(ecp.toWIF(), ecp.getAddress())
   }
 }
 </script>
