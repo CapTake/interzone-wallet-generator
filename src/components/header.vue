@@ -42,9 +42,8 @@ export default {
   created () {
     QRCode.toDataURL('2we5e56det572d5f7dcxgcv76552we').then(url => {
       this.qrcode = url
-      console.log(url)
     }).catch(err => {
-      console.error(err)
+      console.error(err.message)
     })
   }
 }

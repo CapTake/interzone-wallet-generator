@@ -1,0 +1,62 @@
+<template>
+<div class="flex flex-column">
+  <div class="w-100 pa3 mr2">
+    Gathering entropy
+  </div>
+  <div class="outline w-100 pa3 mr2">
+    <v-progress :percent="percent" />
+  </div>
+  <div class="w-100 pa3 mr2 f7" style="word-break: break-all;    word-wrap: break-word;">
+    {{ entropy }}
+  </div>
+</div>
+</template>
+
+<script>
+import VProgress from '@/components/progress'
+export default {
+  data () {
+    return {
+      percent: 0,
+      entropy_: ''
+    }
+  },
+  computed: {
+    entropy: {
+      set (v) {
+        this.entropy_ += v.join('')
+      },
+      get () {
+        return this.entropy_
+      }
+    }
+  },
+  components: {
+    VProgress
+  },
+  mounted () {
+    this.entropy = window.crypto.getRandomValues(new Int8Array(32))
+    let toGo = 1000
+    let f = (e) => {
+      if (e.type === 'touchmove') {
+        this.entropy = [e.touches[0].screenX % 4, e.touches[0].screenY % 4]
+      } else {
+        this.entropy = [e.screenX % 4, e.screenY % 4]
+      }
+      toGo = Math.max(toGo - 1, 0)
+      this.percent = (1000 - toGo) / 10
+      if (toGo === 0) {
+        document.body.removeEventListener('mousemove', f)
+        document.body.removeEventListener('touchmove', f)
+        this.$emit('ready', this.entropy)
+      }
+    }
+    document.body.addEventListener('mousemove', f)
+    document.body.addEventListener('touchmove', f)
+  }
+}
+</script>
+
+<style>
+
+</style>

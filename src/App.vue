@@ -1,14 +1,35 @@
 <template>
   <div id="app">
-    <router-view/>
+    <v-header />
+    <component v-if="entropy" :is="page" />
+    <entropy v-else @ready="entropyCollected" />
   </div>
 </template>
 
 <script>
-import tachions from 'tachyons/css/tachyons.min.css'
+// eslint-disable-next-line
+import tachions from 'tachyons'
+import VHeader from '@/components/header'
+import Entropy from '@/components/Entropy'
+import Wallet from '@/components/Wallet'
 export default {
   name: 'App',
-  tachions
+  data () {
+    return {
+      page: Wallet,
+      count: 0,
+      entropy: null
+    }
+  },
+  components: {
+    VHeader,
+    Entropy
+  },
+  methods: {
+    entropyCollected (entropy) {
+      this.entropy = entropy
+    }
+  }
 }
 </script>
 
