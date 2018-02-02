@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <div class="flex w-50 pa1 outline">
+    <div class="pa1 outline" style="min-width: 90vw;">
       <div :style="{width: percent+'%', transition: 'all 0.2s easing'}" class="pb1 pt1 bg-yellow nowrap">{{ Math.round(percent) + ' %' }}</div>
     </div>
-  </div>
 </template>
 
 <script>

@@ -3,8 +3,10 @@
   <div class="w-100 pa3">
     Gathering entropy
   </div>
-  <div class="outline w-100 pa3">
-    <v-progress :percent="percent" />
+  <div class="w-100 pa3">
+    <div class="flex justify-center">
+      <v-progress :percent="percent" />
+    </div>
   </div>
   <div class="w-100 pa3 f7" style="word-break: break-all;    word-wrap: break-word;">
     {{ entropy }}
@@ -38,7 +40,7 @@ export default {
   },
   mounted () {
     this.entropy = Array.from(window.crypto.getRandomValues(new Uint8Array(64)))
-    let toGo = 1000
+    let toGo = 500
     let f = (e) => {
       if (e.type === 'touchmove') {
         this.entropy = [e.touches[0].screenX % 4, e.touches[0].screenY % 4]
@@ -46,7 +48,7 @@ export default {
         this.entropy = [e.screenX % 4, e.screenY % 4]
       }
       toGo = Math.max(toGo - 1, 0)
-      this.percent = (1000 - toGo) / 10
+      this.percent = (500 - toGo) / 5
       if (toGo === 0) {
         document.body.removeEventListener('mousemove', f)
         document.body.removeEventListener('touchmove', f)
