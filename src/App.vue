@@ -7,10 +7,14 @@
         <a class="f6 link dim ph3 pv2 mh1 dib" :class="buttonClass(1)" @click.prevent="page = 1" href="#1">Many addresses</a>
       </div>
       <div class="pv4 bb">
-        <span class="b">Seed:</span> <label class="mh2"><input type="radio" v-model="isRandom" value="true" /> Random</label> <label class="mh2"><input type="radio" v-model="isRandom" value="false" /> Passphrase</label>
-        <div v-show="byPhrase" class="pa3 bt">
-          <input type="password" />
-          <input type="password" />
+        <span class="b">Seed:</span> <label class="mh2"><input type="radio" v-model="isRandom" :value="true" /> Random</label> <label class="mh2"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
+        <div v-if="byPhrase" class="pv3 flex flex-column">
+          <div class="pv2 w-50-ns">
+            <input type="password" class="outline db" />
+          </div>
+          <div class="pv2 w-50-ns">
+            <input type="password" class="outline db" />
+          </div>
         </div>
       </div>
       <wallet :pub="pub" :priv="priv" :name="coin" />
