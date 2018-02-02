@@ -1,12 +1,12 @@
 <template>
 <div class="flex flex-column">
-  <div class="w-100 pa3 mr2">
+  <div class="w-100 pa3">
     Gathering entropy
   </div>
-  <div class="outline w-100 pa3 mr2">
+  <div class="outline w-100 pa3">
     <v-progress :percent="percent" />
   </div>
-  <div class="w-100 pa3 mr2 f7" style="word-break: break-all;    word-wrap: break-word;">
+  <div class="w-100 pa3 f7" style="word-break: break-all;    word-wrap: break-word;">
     {{ entropy }}
   </div>
 </div>
