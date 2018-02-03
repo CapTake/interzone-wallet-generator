@@ -10,7 +10,7 @@
         <span class="b ma2 dib">Seed:</span>
         <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="true" /> Random</label>
         <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
-        <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle">Generate wallet</button>
+        <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle" @click.prevent="onButton">Generate wallet</button>
         <div v-if="byPhrase" class="mw9 center mt3 ph3-ns">
           <div class="cf ph2-ns pb3">
             <div class="fl w-100 w-third-ns pb1">
@@ -39,9 +39,18 @@
           </div>
         </div>
       </div>
-      <wallet :pub="pub" :priv="priv" :name="coin" />
+      <wallet :pub="one.pub" :priv="one.priv" :name="coin" />
     </div>
     <entropy v-else @ready="entropyCollected" />
+    <footer class="pv4 ph3 ph5-m ph6-l mid-gray">
+  <small class="f6 db tc"><b class="ttu">SHOW YOUR SUPPORT</b></small>
+  <div class="center w-100 w-50-ns mv3">
+  {{ coin + ': ' + support }}
+  </div>
+  <div class="tc mt3">
+    <a href="https://github.com/CapTake/interzone-wallet-generator" title="Source code" class="f6 dib ph2 link mid-gray dim">Check source code</a>
+  </div>
+</footer>
   </div>
 </template>
 
@@ -58,14 +67,17 @@ export default {
   data () {
     return {
       page: 0,
-      nonce: 0,
       minpasslen: 40,
+      waiting: 0,
       entropy: null,
       coin: 'Interzone',
       site: 'https://interzone.space',
-      slogan: 'Catchy subheadline where we explain your wonderful new startup even more',
-      pub: null,
-      priv: null,
+      support: '1MKVCJEsmeWHgeSUqtigBgLWp2Ncq1dd4p',
+      slogan: 'Some catchy slogan here',
+      one: {
+        pub: null,
+        priv: null
+      },
       bulk: [],
       isRandom: true,
       pass: '',
@@ -101,16 +113,34 @@ export default {
   methods: {
     entropyCollected (entropy) {
       this.entropy = Buffer.from(entropy)
-      let ecp = bitcoin.ECPair.makeRandom({
-        network: this.network,
-        rng: () => { return bitcoin.crypto.sha256(this.entropy) }
-      })
-      this.pub = ecp.getAddress()
-      this.priv = ecp.toWIF()
-      this.nonce++
+      this.one = this.genWallet(this.getRandom())
     },
     isLocal () {
       return window.location.protocol === 'file:'
+    },
+    getRandom () {
+      let r = bitcoin.crypto.sha256(this.entropy)
+      this.entropy = r
+      return r
+    },
+    genWallets (seed, n) {
+      let wallets = []
+      let nextseed = Buffer.from(seed)
+      if (+n) {
+        for (let i = 0; i < n; i++) {
+          wallets.push(this.genWallet(nextseed))
+          nextseed = bitcoin.crypto.sha256(nextseed)
+        }
+      }
+      return wallets
+    },
+    genWallet (seed) {
+      let buf = Buffer.from(seed)
+      let ecp = bitcoin.ECPair.makeRandom({
+        network: this.network,
+        rng: () => { return bitcoin.crypto.sha256(buf) }
+      })
+      return {pub: ecp.getAddress(), priv: ecp.toWIF()}
     },
     buttonClass (i) {
       return {
@@ -118,6 +148,20 @@ export default {
         black: i === this.page,
         'bg-white': i === this.page,
         'bg-black': i !== this.page
+      }
+    },
+    onButton () {
+      let seed = 0
+      if (this.isRandom) {
+        seed = this.getRandom()
+      } else {
+        if (!this.passIsOK) return
+        seed = this.pass
+      }
+      if (this.page) {
+        this.bulk = this.genWallets(seed, 100)
+      } else {
+        this.one = this.genWallet(seed)
       }
     },
     pageClick (i, e) {

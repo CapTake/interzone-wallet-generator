@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-column">
+<div class="flex flex-column pv4">
   <div class="w-100 pa3">
     Gathering entropy:
   </div>

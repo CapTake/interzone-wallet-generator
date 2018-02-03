@@ -9,8 +9,8 @@
           </a>
         </div>
         <div class="dtc v-mid tr pa3">
-          <a v-if="isLocal" class="f6 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3 green" href="/" title="You running wallet generator from local file, which is secure" >Local install</a>
-          <a v-else class="f6 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3 ba" href="/" title="You should download this file and run it locally for best security" download="index.html" >Download</a>
+          <a v-if="isLocal" class="f6 fw4 hover-white no-underline white-70 dib-ns pv2 ph3 green" href="/" title="You running wallet generator from local file, which is secure" >Local file</a>
+          <a v-else class="f6 fw4 hover-white no-underline white-70 dib-ns pv2 ph3 ba" href="/" title="You should download this file and run it locally for best security" download="index.html" >Download</a>
         </div>
       </nav>
       <div class="tc-l mt4 mt5-m mt6-l ph3">
