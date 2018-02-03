@@ -9,11 +9,8 @@
           </a>
         </div>
         <div class="dtc v-mid tr pa3">
-          <a class="f6 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="/" >How it Works</a>
-          <a class="f6 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="/" >Pricing</a>
-          <a class="f6 fw4 hover-white no-underline white-70 dn dib-l pv2 ph3" href="/" >About</a>
-          <a class="f6 fw4 hover-white no-underline white-70 dn dib-l pv2 ph3" href="/" >Careers</a>
-          <a class="f6 fw4 hover-white no-underline white-70 dib ml2 pv2 ph3 ba" href="/" >Sign Up</a>
+          <a v-if="isLocal" class="f6 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3 green" href="/" title="You running wallet generator from local file, which is secure" >Local install</a>
+          <a v-else class="f6 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3 ba" href="/" title="You should download this file and run it locally for best security" download="index.html" >Download</a>
         </div>
       </nav>
       <div class="tc-l mt4 mt5-m mt6-l ph3">
@@ -26,13 +23,17 @@
 </template>
 
 <script>
-import logo from '../assets/logo.png'
+import logo from '@/components/logo.png'
 export default {
   props: ['name', 'url', 'sub'],
   data () {
     return {
-      logo
+      logo,
+      isLocal: false
     }
+  },
+  created () {
+    this.isLocal = window.location.protocol === 'file:'
   }
 }
 </script>

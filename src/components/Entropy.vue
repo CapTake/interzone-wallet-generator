@@ -1,7 +1,7 @@
 <template>
 <div class="flex flex-column">
   <div class="w-100 pa3">
-    Gathering entropy
+    Gathering entropy:
   </div>
   <div class="w-100 pa3">
     <div class="w-90 w-60-ns center">
@@ -46,7 +46,7 @@ export default {
   },
   mounted () {
     this.entropy = new Buffer(Array.from(window.crypto.getRandomValues(new Uint8Array(32))))
-    let toGo = 500
+    let toGo = 200
     let f = (e) => {
       if (e.type === 'touchmove') {
         this.entropy = new Buffer([e.touches[0].screenX % 4, e.touches[0].screenY % 4])
@@ -54,15 +54,15 @@ export default {
         this.entropy = new Buffer([e.screenX % 4, e.screenY % 4])
       }
       toGo = Math.max(toGo - 1, 0)
-      this.percent = (500 - toGo) / 5
+      this.percent = (200 - toGo) / 2
       if (toGo === 0) {
         document.body.removeEventListener('mousemove', f)
-        document.body.removeEventListener('touchmove', f)
+        document.body.removeEventListener('touchstart', f)
         this.$emit('ready', this.entropy)
       }
     }
     document.body.addEventListener('mousemove', f)
-    document.body.addEventListener('touchmove', f)
+    document.body.addEventListener('touchstart', f)
   }
 }
 </script>

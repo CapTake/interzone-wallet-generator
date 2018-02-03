@@ -21,8 +21,8 @@
               <div v-if="pass.length === 0" class="w-90 center ph2 f7 mt1">
                 Use long, impossible for anyone to guess passphrase, only you could remember
               </div>
-              <div v-else-if="pass.length < 32" class="w-90 center ph2 f7 mt1 red">
-                Your password phrase is too short! (at least 32 characters required)
+              <div v-else-if="pass.length < minpasslen" class="w-90 center ph2 f7 mt1 red">
+                Your password phrase is too short! (at least {{ minpasslen }} characters required)
               </div>
             </div>
           </div>
@@ -59,6 +59,7 @@ export default {
     return {
       page: 0,
       nonce: 0,
+      minpasslen: 40,
       entropy: null,
       coin: 'Interzone',
       site: 'https://interzone.space',
@@ -89,7 +90,7 @@ export default {
       return this.isRandom || this.passIsOK ? {} : {opacity: '0.5', cursor: 'not-allowed'}
     },
     passIsOK () {
-      return this.pass.length >= 32 && this.pass === this.pass2
+      return this.pass.length >= this.minpasslen && this.pass === this.pass2
     }
   },
   components: {
@@ -107,6 +108,9 @@ export default {
       this.pub = ecp.getAddress()
       this.priv = ecp.toWIF()
       this.nonce++
+    },
+    isLocal () {
+      return window.location.protocol === 'file:'
     },
     buttonClass (i) {
       return {
