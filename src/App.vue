@@ -3,17 +3,39 @@
     <v-header :name="coin" :url="site" :sub="slogan" />
     <div v-if="entropy" class="bb">
       <div class="ph3 bg-black-90">
-        <a class="f6 link dim ph3 pv2 mh1 dib" :class="buttonClass(0)" @click.prevent="page = 0" href="#0">Single address</a>
-        <a class="f6 link dim ph3 pv2 mh1 dib" :class="buttonClass(1)" @click.prevent="page = 1" href="#1">Many addresses</a>
+        <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(0)" @click.prevent="pageClick(0, $event)" href="#0">Single address</a>
+        <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(1)" @click.prevent="pageClick(1, $event)" href="#1">Bulk wallet</a>
       </div>
       <div class="pv4 bb">
-        <span class="b">Seed:</span> <label class="mh2"><input type="radio" v-model="isRandom" :value="true" /> Random</label> <label class="mh2"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
-        <div v-if="byPhrase" class="pv3 flex flex-column">
-          <div class="pv2 w-50-ns">
-            <input type="password" class="outline db" />
+        <span class="b ma2 dib">Seed:</span>
+        <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="true" /> Random</label>
+        <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
+        <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle">Generate wallet</button>
+        <div v-if="byPhrase" class="mw9 center mt3 ph3-ns">
+          <div class="cf ph2-ns pb3">
+            <div class="fl w-100 w-third-ns pb1">
+              Password phrase
+            </div>
+            <div class="fl w-100 w-two-thirds-ns pb1">
+              <input type="password" class="w-90 center ph2" v-model="pass" />
+              <div v-if="pass.length === 0" class="w-90 center ph2 f7 mt1">
+                Use long, impossible for anyone to guess passphrase, only you could remember
+              </div>
+              <div v-else-if="pass.length < 32" class="w-90 center ph2 f7 mt1 red">
+                Your password phrase is too short! (at least 32 characters required)
+              </div>
+            </div>
           </div>
-          <div class="pv2 w-50-ns">
-            <input type="password" class="outline db" />
+          <div class="cf ph2-ns pb3">
+            <div class="fl w-100 w-third-ns pb1 right">
+              Repeat pass phrase
+            </div>
+            <div class="fl w-100 w-two-thirds-ns pb1">
+              <input type="password" class="w-90 center ph2" v-model="pass2" />
+              <div v-if="pass2.length && pass2 !== pass" class="w-90 center ph2 f7 mt1 red">
+                  Password phrases don't match
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -62,6 +84,12 @@ export default {
   computed: {
     byPhrase () {
       return !this.isRandom
+    },
+    btnStyle () {
+      return this.isRandom || this.passIsOK ? {} : {opacity: '0.5', cursor: 'not-allowed'}
+    },
+    passIsOK () {
+      return this.pass.length >= 32 && this.pass === this.pass2
     }
   },
   components: {
@@ -87,6 +115,10 @@ export default {
         'bg-white': i === this.page,
         'bg-black': i !== this.page
       }
+    },
+    pageClick (i, e) {
+      this.page = i
+      e.target.blur()
     }
   }
 }

@@ -4,7 +4,7 @@
     Gathering entropy
   </div>
   <div class="w-100 pa3">
-    <div class="flex justify-center">
+    <div class="w-90 w-60-ns center">
       <v-progress :percent="percent" />
     </div>
   </div>
