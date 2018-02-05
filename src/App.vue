@@ -79,7 +79,7 @@ export default {
       short: 'ITZ',
       site: 'https://captake.github.io/interzone-wallet-generator/',
       support: '1MKVCJEsmeWHgeSUqtigBgLWp2Ncq1dd4p',
-      slogan: 'Some catchy slogan here',
+      slogan: 'Your Social Blockchain',
       one: {
         pub: null,
         priv: null
