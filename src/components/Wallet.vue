@@ -1,15 +1,15 @@
 <template>
-  <div class="mw9 center ph3-ns bg-white">
-  <div class="cf ph2-ns">
-    <div class="fl w-100 w-50-ns pt4 pb4">
+  <div class="mw9 center bg-white">
+  <div class="cf">
+    <div class="fl w-100 w-50-ns pv4">
       <span class="b">Public address</span> <span class="bg-green pl1 pr1 white">OK to share</span>
-      <div><img :src="pubq" class="mw5 w5 h5" alt="Public address, you may share it" /></div>
-      <div class="h3 fw6 f7 pr2 pl2">{{ pub }}</div>
+      <div><img :src="pubq" class="mw-60 mv-80-ns mh-60 mh-80-ns center w5 h5" alt="Public address, you may share it" /></div>
+      <div class="fw4 f7 ph2 code" style="word-break: break-all; word-wrap: break-word;">{{ pub }}</div>
     </div>
-    <div class="fl w-100 w-50-ns pt4 pb4">
+    <div class="fl w-100 w-50-ns pv4">
       <span class="b">Private key</span> <span class="bg-red pl1 pr1 white">KEEP SECRET!</span>
-      <div><img :src="privq" class="mw5 w5 h5" alt="Private key, keep it safe! Anyone who has it controls your money!" /></div>
-      <div class="h3 fw6 f7 pr2 pl2" style="word-break: break-all; word-wrap: break-word;">{{ priv }}</div>
+      <div><img :src="privq" class="mw-60 mv-80-ns  mh-60 mh-80-ns center w5 h5" alt="Private key, keep it safe! Anyone who has it controls your money!" /></div>
+      <div class="fw4 f7 ph2 code" style="word-break: break-all; word-wrap: break-word;">{{ priv }}</div>
     </div>
   </div>
 </div>

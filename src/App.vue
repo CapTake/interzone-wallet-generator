@@ -43,9 +43,9 @@
       <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" :working="waiting" />
     </div>
     <entropy v-else @ready="entropyCollected" :touch="touch" />
-    <footer class="pv4 ph3 ph5-m ph6-l mid-gray">
-      <small class="f6 db tc"><b class="ttu">SHOW YOUR SUPPORT</b></small>
-      <div class="center w-100 w-50-ns mv3">
+    <footer class="pv4 ph3 ph5-m ph6-l bg-silver black">
+      <small class="f7 db tc"><b class="ttu">Show your support</b></small>
+      <div class="center w-100 w-50-ns mv3 f7" style="word-break: break-all; word-wrap: break-word;">
       {{ coin + ': ' + support }}
       </div>
       <div class="tc mt3">
@@ -170,7 +170,7 @@ export default {
         seed = Buffer.from(this.pass)
       }
       this.waiting = true
-      this.$nextTick(() => {
+      setTimeout(() => {
         if (this.page) {
           this.genWallets(seed, 99).then((wallets) => {
             this.waiting = false
@@ -180,7 +180,7 @@ export default {
           this.one = this.genWallet(seed)
           this.waiting = false
         }
-      })
+      }, 100)
     },
     pageClick (i, e) {
       this.page = i
