@@ -21,6 +21,7 @@ export default {
     text: {
       get () {
         if (!this.wallets.length) return 'Click button to generate some addresses'
+        if (this.working) return 'Working...'
         let d = new Date()
         let text = `# ${this.name}(${this.short}) bulk wallet. Date: ${d.toLocaleString()}${'\n'}#nn, private key, address${'\n'}`
         this.wallets.forEach((w, i) => {

@@ -40,7 +40,7 @@
         </div>
       </div>
       <wallet v-if="page === 0" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" />
-      <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" />
+      <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" :working="waiting" />
     </div>
     <entropy v-else @ready="entropyCollected" :touch="touch" />
     <footer class="pv4 ph3 ph5-m ph6-l mid-gray">
