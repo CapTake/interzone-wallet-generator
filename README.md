@@ -3,10 +3,10 @@
 > Interzone (ITZ) wallet generator
 
 Dependencies:
-    [bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib)
-    [qrcode](https://github.com/soldair/node-qrcode)
-    [safe-buffer](https://github.com/feross/safe-buffer)
-    [vue](http://vuejs.org)
+    *[bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib)
+    *[qrcode](https://github.com/soldair/node-qrcode)
+    *[safe-buffer](https://github.com/feross/safe-buffer)
+    *[vue](http://vuejs.org)
 
 
 ## Build Setup
@@ -20,9 +20,3 @@ npm run dev
 
 # build for production with minification
 npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
