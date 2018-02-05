@@ -77,7 +77,7 @@ export default {
       touch: false,
       coin: 'Interzone',
       short: 'ITZ',
-      site: 'https://interzone.space',
+      site: 'https://captake.github.io/interzone-wallet-generator/',
       support: '1MKVCJEsmeWHgeSUqtigBgLWp2Ncq1dd4p',
       slogan: 'Some catchy slogan here',
       one: {
