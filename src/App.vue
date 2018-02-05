@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header :name="coin" :url="site" :sub="slogan" />
+    <v-header :name="coin" :url="site" :dllink="download" :sub="slogan" />
     <div v-if="entropy" class="mb5-ns">
       <div class="ph3 bg-black-90">
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(0)" @click.prevent="pageClick(0, $event)" href="#0">Single address</a>
@@ -78,6 +78,7 @@ export default {
       coin: 'Interzone',
       short: 'ITZ',
       site: 'https://captake.github.io/interzone-wallet-generator/',
+      download: 'https://captake.github.io/interzone-wallet-generator/index.html',
       support: '1MKVCJEsmeWHgeSUqtigBgLWp2Ncq1dd4p',
       slogan: 'Your Social Blockchain',
       one: {
