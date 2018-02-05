@@ -1,12 +1,12 @@
 <template>
   <div id="app">
     <v-header :name="coin" :url="site" :sub="slogan" />
-    <div v-if="entropy" class="bb">
+    <div v-if="entropy" class="mb5-ns">
       <div class="ph3 bg-black-90">
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(0)" @click.prevent="pageClick(0, $event)" href="#0">Single address</a>
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(1)" @click.prevent="pageClick(1, $event)" href="#1">Bulk wallet</a>
       </div>
-      <div class="pv4 bb">
+      <div class="pv4 bb b--silver">
         <span class="b ma2 dib">Seed:</span>
         <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="true" /> Random</label>
         <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>

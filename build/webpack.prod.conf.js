@@ -67,18 +67,18 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: process.env.NODE_ENV === 'testing'
         ? 'index.html'
         : config.build.index,
-      template: 'index.html',
+      template: 'src/index.html',
       inject: true,
       minify: {
-        removeComments: true,
-        collapseWhitespace: true,
+        removeComments: false,
+        collapseWhitespace: false,
         removeAttributeQuotes: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks via CommonsChunkPlugin
       chunksSortMode: 'dependency',
-      inlineSource: '.(js|css)$' // embed all javascript and css inline
+      inlineSource: '.(js|css)$' // embed all javascript and css inline with HtmlWebpackInlineSourcePlugin
     }),
 
     new HtmlWebpackInlineSourcePlugin(),

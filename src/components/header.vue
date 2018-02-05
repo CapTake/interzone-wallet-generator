@@ -13,7 +13,7 @@
           <a v-else class="f6 fw4 hover-white no-underline white-70 dib-ns pv2 ph3 ba" href="/" title="You should download this file and run it locally for best security" download="index.html" >Download</a>
         </div>
       </nav>
-      <div class="tc-l mt4 mt5-m mt6-l ph3">
+      <div class="tc-l mt4 mt5-m ph3">
         <h1 class="f2 f1-l fw2 white-90 mb0 lh-title">{{ name }} wallet generator</h1>
         <h2 class="fw1 f3 white-80 mt3 mb4">{{ sub }}</h2>
       </div>

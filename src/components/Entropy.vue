@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-column pv4">
+<div class="flex flex-column pv6 mb6-ns">
   <div class="w-100 pa3">
     Gathering entropy: {{ text }}
   </div>
@@ -8,7 +8,7 @@
       <v-progress :percent="percent" />
     </div>
   </div>
-  <div class="w-100 pa3 f5" style="word-break: break-all;    word-wrap: break-word;">
+  <div class="w-100 pv3 ph1 ph3-ns f5" style="word-break: break-all; word-wrap: break-word;">
     {{ hex }}
   </div>
 </div>

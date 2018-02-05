@@ -1,5 +1,5 @@
 <template>
-  <div class="mw9 center bg-white">
+  <div class="mw9 center mb4-ns bg-white">
   <div class="cf">
     <div class="fl w-100 w-50-ns pv4">
       <span class="b">Public address</span> <span class="bg-green pl1 pr1 white">OK to share</span>
