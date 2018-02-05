@@ -13,7 +13,7 @@
         <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle" @click.prevent="onButton">Generate wallet</button>
         <div v-if="byPhrase" class="mw9 center mt3 ph3-ns">
           <div class="cf ph2-ns pb3">
-            <div class="fl w-100 w-third-ns pb1">
+            <div class="fl w-100 w-third-ns pb1 tr">
               Password phrase
             </div>
             <div class="fl w-100 w-two-thirds-ns pb1">
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="cf ph2-ns pb3">
-            <div class="fl w-100 w-third-ns pb1 right">
+            <div class="fl w-100 w-third-ns pb1 tr">
               Repeat pass phrase
             </div>
             <div class="fl w-100 w-two-thirds-ns pb1">
