@@ -18,7 +18,7 @@
 <script>
 import QRCode from 'qrcode'
 export default {
-  props: ['pub', 'priv', 'name'],
+  props: ['pub', 'priv', 'name', 'short'],
   data () {
     return {
       pubq: '',

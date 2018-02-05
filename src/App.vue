@@ -39,18 +39,20 @@
           </div>
         </div>
       </div>
-      <wallet :pub="one.pub" :priv="one.priv" :name="coin" />
+      <wallet v-if="page === 0" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" />
+      <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" />
     </div>
-    <entropy v-else @ready="entropyCollected" />
+    <entropy v-else @ready="entropyCollected" :touch="touch" />
     <footer class="pv4 ph3 ph5-m ph6-l mid-gray">
-  <small class="f6 db tc"><b class="ttu">SHOW YOUR SUPPORT</b></small>
-  <div class="center w-100 w-50-ns mv3">
-  {{ coin + ': ' + support }}
-  </div>
-  <div class="tc mt3">
-    <a href="https://github.com/CapTake/interzone-wallet-generator" title="Source code" class="f6 dib ph2 link mid-gray dim">Check source code</a>
-  </div>
-</footer>
+      <small class="f6 db tc"><b class="ttu">SHOW YOUR SUPPORT</b></small>
+      <div class="center w-100 w-50-ns mv3">
+      {{ coin + ': ' + support }}
+      </div>
+      <div class="tc mt3">
+        <a href="https://github.com/CapTake/interzone-wallet-generator" title="Source code" class="f6 dib ph2 link mid-gray dim">Check source code</a>
+      </div>
+    </footer>
+    <v-modal v-if="waiting" text="Working..." />
   </div>
 </template>
 
@@ -61,16 +63,20 @@ import { Buffer } from 'safe-buffer'
 import bitcoin from 'bitcoinjs-lib'
 import VHeader from '@/components/header'
 import Entropy from '@/components/Entropy'
+import VModal from '@/components/modal'
 import Wallet from '@/components/Wallet'
+import BulkWallet from '@/components/BulkWallet'
 export default {
   name: 'App',
   data () {
     return {
       page: 0,
       minpasslen: 40,
-      waiting: 0,
+      waiting: false,
       entropy: null,
+      touch: false,
       coin: 'Interzone',
+      short: 'ITZ',
       site: 'https://interzone.space',
       support: '1MKVCJEsmeWHgeSUqtigBgLWp2Ncq1dd4p',
       slogan: 'Some catchy slogan here',
@@ -83,7 +89,7 @@ export default {
       pass: '',
       pass2: '',
       network: {
-        messagePrefix: '\x3fXXX Signed Message:\n',
+        messagePrefix: '\x19XXX Signed Message:\n',
         bip32: {
           public: 0x019da462,
           private: 0x019d9cfe
@@ -99,7 +105,7 @@ export default {
       return !this.isRandom
     },
     btnStyle () {
-      return this.isRandom || this.passIsOK ? {} : {opacity: '0.5', cursor: 'not-allowed'}
+      return (this.isRandom || this.passIsOK) && !this.waiting ? {} : {opacity: '0.5', cursor: 'not-allowed'}
     },
     passIsOK () {
       return this.pass.length >= this.minpasslen && this.pass === this.pass2
@@ -108,7 +114,9 @@ export default {
   components: {
     VHeader,
     Entropy,
-    Wallet
+    VModal,
+    Wallet,
+    BulkWallet
   },
   methods: {
     entropyCollected (entropy) {
@@ -124,21 +132,22 @@ export default {
       return r
     },
     genWallets (seed, n) {
-      let wallets = []
-      let nextseed = Buffer.from(seed)
-      if (+n) {
-        for (let i = 0; i < n; i++) {
-          wallets.push(this.genWallet(nextseed))
-          nextseed = bitcoin.crypto.sha256(nextseed)
+      return new Promise((resolve, reject) => {
+        let wallets = []
+        let nextseed = seed
+        if (+n) {
+          for (let i = 0; i < n; i++) {
+            wallets.push(this.genWallet(nextseed))
+            nextseed = bitcoin.crypto.sha256(nextseed)
+          }
         }
-      }
-      return wallets
+        resolve(wallets)
+      })
     },
     genWallet (seed) {
-      let buf = Buffer.from(seed)
       let ecp = bitcoin.ECPair.makeRandom({
         network: this.network,
-        rng: () => { return bitcoin.crypto.sha256(buf) }
+        rng: () => { return bitcoin.crypto.sha256(seed) }
       })
       return {pub: ecp.getAddress(), priv: ecp.toWIF()}
     },
@@ -150,24 +159,40 @@ export default {
         'bg-black': i !== this.page
       }
     },
-    onButton () {
+    onButton (e) {
+      e.target.blur()
       let seed = 0
+      if (this.waiting) return
       if (this.isRandom) {
         seed = this.getRandom()
       } else {
         if (!this.passIsOK) return
-        seed = this.pass
+        seed = Buffer.from(this.pass)
       }
-      if (this.page) {
-        this.bulk = this.genWallets(seed, 100)
-      } else {
-        this.one = this.genWallet(seed)
-      }
+      this.waiting = true
+      this.$nextTick(() => {
+        if (this.page) {
+          this.genWallets(seed, 99).then((wallets) => {
+            this.waiting = false
+            this.bulk = wallets
+          })
+        } else {
+          this.one = this.genWallet(seed)
+          this.waiting = false
+        }
+      })
     },
     pageClick (i, e) {
       this.page = i
       e.target.blur()
     }
+  },
+  created () {
+    let self = this
+    window.addEventListener('touchstart', function touched () {
+      self.touch = true
+      window.removeEventListener('touchstart', touched)
+    }, false)
   }
 }
 </script>

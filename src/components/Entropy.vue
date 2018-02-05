@@ -1,9 +1,9 @@
 <template>
 <div class="flex flex-column pv4">
   <div class="w-100 pa3">
-    Gathering entropy:
+    Gathering entropy: {{ text }}
   </div>
-  <div class="w-100 pa3">
+  <div class="w-100 pv3">
     <div class="w-90 w-60-ns center">
       <v-progress :percent="percent" />
     </div>
@@ -19,6 +19,7 @@ import {Buffer} from 'safe-buffer'
 import bitcoin from 'bitcoinjs-lib'
 import VProgress from '@/components/progress'
 export default {
+  props: ['touch'],
   data () {
     return {
       percent: 0,
@@ -38,6 +39,9 @@ export default {
     },
     hex () {
       return this.entropy_.toString('hex')
+    },
+    text () {
+      return 'Randomly ' + (this.touch ? 'tap the screen or ' : '') + 'move mouse pointer'
     }
   },
   components: {
