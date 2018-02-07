@@ -1,5 +1,46 @@
 <template>
   <div id="app">
+  <div class="dn">
+
+Notice of Copyrights and Licenses:
+---------------------------------------
+The {{ coin }} wallet generator project, software and embedded resources are copyright CapTake.
+
+Portions of the all-in-one HTML document contain codes that are the copyrights of others.
+The individual copyrights are included throughout the document along with their licenses.
+
+Summary of third party components with a redistributable license:
+JavaScript library          License
+------------------------   -------------
+Vue.js                      MIT License
+BitcoinJS(bitcoinjs-lib)    MIT License
+node-qrcode                 MIT License
+safe-buffer                 MIT License
+
+Css library:                License
+------------------------   -------------
+Tachyons                    MIT License
+
+The {{ coin }} wallet generator software is available under The MIT License (MIT)
+Copyright (c) 2018 CapTake
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial
+portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+  GitHub Repository: {{ git }}
+</div>
     <v-header :name="coin" :url="site" :dllink="download" :sub="slogan" />
     <div v-if="entropy" class="mb5-ns">
       <div class="ph3 bg-black-90">
@@ -49,7 +90,7 @@
       {{ coin + ': ' + support }}
       </div>
       <div class="tc mt3">
-        <a href="https://github.com/CapTake/interzone-wallet-generator" title="Source code" class="f6 dib ph2 link mid-gray dim">Check source code</a>
+        <a :href="git" title="Source code" class="f6 dib ph2 link mid-gray dim">Check source code</a>
       </div>
     </footer>
     <v-modal v-if="waiting" text="Working..." />
@@ -80,6 +121,7 @@ export default {
       site: 'https://captake.github.io/interzone-wallet-generator/',
       download: 'https://captake.github.io/interzone-wallet-generator/index.html',
       support: '1MKVCJEsmeWHgeSUqtigBgLWp2Ncq1dd4p',
+      git: 'https://github.com/CapTake/interzone-wallet-generator',
       slogan: 'Your Social Blockchain',
       one: {
         pub: null,

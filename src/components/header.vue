@@ -1,6 +1,6 @@
 <template>
 <header class="sans-serif">
-  <div class="cover bg-left bg-center-l">
+  <div class="">
     <div class="bg-black-90 pb3">
       <nav class="dt w-100 mw8 center">
         <div class="dtc w2 v-mid pa3">
@@ -39,5 +39,4 @@ export default {
 </script>
 
 <style>
-
 </style>
