@@ -5,10 +5,10 @@
 You can test and download it here [https://captake.github.io/interzone-wallet-generator/](https://captake.github.io/interzone-wallet-generator/)
 
 Dependencies:
-    *[bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib)
-    *[qrcode](https://github.com/soldair/node-qrcode)
-    *[safe-buffer](https://github.com/feross/safe-buffer)
-    *[vue](http://vuejs.org)
+    - [bitcoinjs-lib](https://github.com/bitcoinjs/bitcoinjs-lib)
+    - [qrcode](https://github.com/soldair/node-qrcode)
+    - [safe-buffer](https://github.com/feross/safe-buffer)
+    - [vue](http://vuejs.org)
 
 
 ## Build Setup
