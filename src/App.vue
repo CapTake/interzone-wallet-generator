@@ -82,6 +82,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       </div>
       <wallet v-if="page === 0" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" />
       <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" :working="waiting" />
+      <paper-wallet />
     </div>
     <entropy v-else @ready="entropyCollected" :touch="touch" />
     <footer class="pv4 ph3 ph5-m ph6-l bg-silver black">
@@ -107,6 +108,7 @@ import Entropy from '@/components/Entropy'
 import VModal from '@/components/modal'
 import Wallet from '@/components/Wallet'
 import BulkWallet from '@/components/BulkWallet'
+import PaperWallet from '@/components/PaperWallet'
 export default {
   name: 'App',
   data () {
@@ -159,7 +161,8 @@ export default {
     Entropy,
     VModal,
     Wallet,
-    BulkWallet
+    BulkWallet,
+    PaperWallet
   },
   methods: {
     entropyCollected (entropy) {
