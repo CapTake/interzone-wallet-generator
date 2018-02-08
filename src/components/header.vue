@@ -1,5 +1,5 @@
 <template>
-<header class="sans-serif">
+<header class="sans-serif no-print">
   <div class="">
     <div class="bg-black-90 pb3">
       <nav class="dt w-100 mw8 center">

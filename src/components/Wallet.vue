@@ -1,5 +1,6 @@
 <template>
-  <div class="mw9 center mb4-ns bg-white">
+  <paper-wallet v-if="paper" :pub="pub" :priv="priv" :pubq="pubq" :privq="privq"  :logo="logo" :coin="name" :short="short" />
+  <div v-else class="mw9 center mb4-ns bg-white">
   <div class="cf">
     <div class="fl w-100 w-50-ns pv4">
       <span class="b">Public address</span> <span class="bg-green pl1 pr1 white">OK to share</span>
@@ -17,14 +18,17 @@
 
 <script>
 import QRCode from 'qrcode'
+import PaperWallet from '@/components/PaperWallet'
 export default {
-  props: ['pub', 'priv', 'name', 'short'],
+  props: ['pub', 'priv', 'name', 'short', 'logo', 'paper'],
   data () {
     return {
       pubq: '',
-      privq: '',
-      step: 0
+      privq: ''
     }
+  },
+  components: {
+    PaperWallet
   },
   methods: {
     onUpdate () {

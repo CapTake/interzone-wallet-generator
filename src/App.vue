@@ -43,11 +43,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </div>
     <v-header :name="coin" :url="site" :dllink="download" :sub="slogan" />
     <div v-if="entropy" class="mb5-ns">
-      <div class="ph3 bg-black-90">
+      <div class="ph3 bg-black-90 no-print">
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(0)" @click.prevent="pageClick(0, $event)" href="#0">Single address</a>
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(1)" @click.prevent="pageClick(1, $event)" href="#1">Bulk wallet</a>
       </div>
-      <div class="pv4 bb b--silver">
+      <div class="pv4 bb b--silver no-print">
         <span class="b ma2 dib">Seed:</span>
         <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="true" /> Random</label>
         <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
@@ -80,12 +80,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           </div>
         </div>
       </div>
-      <wallet v-if="page === 0" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" />
+      <wallet v-if="page === 0" :paper="true" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" :logo="logo" />
       <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" :working="waiting" />
-      <paper-wallet />
     </div>
     <entropy v-else @ready="entropyCollected" :touch="touch" />
-    <footer class="pv4 ph3 ph5-m ph6-l bg-silver black">
+    <footer class="pv4 ph3 ph5-m ph6-l bg-silver black no-print">
       <small class="f7 db tc"><b class="ttu">Show your support</b></small>
       <div class="center w-100 w-50-ns mv3 f7" style="word-break: break-all; word-wrap: break-word;">
       {{ coin + ': ' + support }}
@@ -108,12 +107,13 @@ import Entropy from '@/components/Entropy'
 import VModal from '@/components/modal'
 import Wallet from '@/components/Wallet'
 import BulkWallet from '@/components/BulkWallet'
-import PaperWallet from '@/components/PaperWallet'
+import logo from '@/components/logo.png'
 export default {
   name: 'App',
   data () {
     return {
       page: 0,
+      logo,
       minpasslen: 40,
       waiting: false,
       entropy: null,
@@ -161,8 +161,7 @@ export default {
     Entropy,
     VModal,
     Wallet,
-    BulkWallet,
-    PaperWallet
+    BulkWallet
   },
   methods: {
     entropyCollected (entropy) {
@@ -250,5 +249,8 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+@media print {
+  .no-print { display: none }
 }
 </style>
