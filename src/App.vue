@@ -212,7 +212,7 @@ export default {
         seed = this.getRandom()
       } else {
         if (!this.passIsOK) return
-        seed = Buffer.from(this.pass)
+        seed = bitcoin.crypto.hash256(Buffer.from(this.pass))
       }
       this.waiting = true
       setTimeout(() => {
