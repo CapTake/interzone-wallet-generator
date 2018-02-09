@@ -40,52 +40,62 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
   GitHub Repository: {{ git }}
+---------------------------------------------------------------------
+Please donate {{ coin }} ({{ short }}) to this address: {{ support }}
+---------------------------------------------------------------------
 </div>
     <v-header :name="coin" :url="site" :dllink="download" :sub="slogan" />
     <div v-if="entropy" class="mb5-ns">
-      <div class="ph3 bg-black-90 no-print">
+      <div class="bg-black-90 no-print">
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(0)" @click.prevent="pageClick(0, $event)" href="#0">Single address</a>
+        <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(2)" @click.prevent="pageClick(2, $event)" href="#0">Paper wallet</a>
         <a class="f6 link dim ph3 pv2 mh1 dib br1 br--top" :class="buttonClass(1)" @click.prevent="pageClick(1, $event)" href="#1">Bulk wallet</a>
       </div>
-      <div class="pv4 bb b--silver no-print">
-        <span class="b ma2 dib">Seed:</span>
-        <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="true" /> Random</label>
-        <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
-        <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle" @click.prevent="onButton">Generate wallet</button>
-        <div v-if="byPhrase" class="mw9 center mt3 ph3-ns">
-          <div class="cf ph2-ns pb3">
-            <div class="fl w-100 w-third-ns pb1 tr-ns">
-              Password phrase
-            </div>
-            <div class="fl w-100 w-two-thirds-ns pb1">
-              <input type="password" class="w-90 center ph2" v-model="pass" />
-              <div v-if="pass.length === 0" class="w-90 center ph2 f7 mt1">
-                Use long, impossible for anyone to guess passphrase, only you could remember
+      <div class="pv4 no-print">
+        <div v-if="page === 1">
+          <span class="b ma2 dib">Seed:</span>
+          <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="true" /> Random</label>
+          <label class="ma2 dib"><input type="radio" v-model="isRandom" :value="false" /> Passphrase</label>
+          <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle" @click.prevent="onBulk">Generate {{ bulk.length ? 'new' : '' }} wallet</button>
+          <div v-if="byPhrase" class="mw9 center mt3 ph3-ns">
+            <div class="cf ph2-ns pb3">
+              <div class="fl w-100 w-third-ns pb1 tr-ns">
+                Password phrase
               </div>
-              <div v-else-if="pass.length < minpasslen" class="w-90 center ph2 f7 mt1 red">
-                Your password phrase is too short! (at least {{ minpasslen }} characters required)
+              <div class="fl w-100 w-two-thirds-ns pb1">
+                <input type="password" class="w-90 center ph2" v-model="pass" />
+                <div v-if="pass.length === 0" class="w-90 center ph2 f7 mt1">
+                  Use long, impossible for anyone to guess passphrase, only you could remember
+                </div>
+                <div v-else-if="pass.length < minpasslen" class="w-90 center ph2 f7 mt1 red">
+                  Your password phrase is too short! (at least {{ minpasslen }} characters required)
+                </div>
               </div>
             </div>
-          </div>
-          <div class="cf ph2-ns pb3">
-            <div class="fl w-100 w-third-ns pb1 tr-ns">
-              Repeat pass phrase
-            </div>
-            <div class="fl w-100 w-two-thirds-ns pb1">
-              <input type="password" class="w-90 center ph2" v-model="pass2" />
-              <div v-if="pass2.length && pass2 !== pass" class="w-90 center ph2 f7 mt1 red">
-                  Password phrases don't match
+            <div class="cf ph2-ns pb3">
+              <div class="fl w-100 w-third-ns pb1 tr-ns">
+                Repeat pass phrase
+              </div>
+              <div class="fl w-100 w-two-thirds-ns pb1">
+                <input type="password" class="w-90 center ph2" v-model="pass2" />
+                <div v-if="pass2.length && pass2 !== pass" class="w-90 center ph2 f7 mt1 red">
+                    Password phrases don't match
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div v-else>
+          <button class="f6 link dim br1 ph3 pv2 mb2 dib white bg-dark-blue b--none" :style="btnStyle" @click.prevent="onOne">Generate new wallet</button>
+          <button v-if="page === 2" class="f6 link dim br1 ph3 pv2 mb2 dib black bg-silver b--none" :style="btnStyle" onclick="window.print()">Print paper wallet</button>
+        </div>
       </div>
-      <wallet v-if="page === 0" :paper="true" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" :logo="logo" />
-      <bulk-wallet v-if="page === 1" :wallets="bulk" :name="coin" :short="short" :working="waiting" />
+      <wallet v-if="page !== 1" :paper="page === 2" :pub="one.pub" :priv="one.priv" :name="coin" :short="short" :logo="logo" />
+      <bulk-wallet v-else :wallets="bulk" :name="coin" :short="short" :working="waiting" />
     </div>
     <entropy v-else @ready="entropyCollected" :touch="touch" />
     <footer class="pv4 ph3 ph5-m ph6-l bg-silver black no-print">
-      <small class="f7 db tc"><b class="ttu">Show your support</b></small>
+      <small class="f7 db tc"><b class="ttu">Donate to</b></small>
       <div class="center w-100 w-50-ns mv3 f7" style="word-break: break-all; word-wrap: break-word;">
       {{ coin + ': ' + support }}
       </div>
@@ -204,7 +214,19 @@ export default {
         'bg-black': i !== this.page
       }
     },
-    onButton (e) {
+    onOne (e) {
+      e.target.blur()
+      if (this.waiting) return
+      let seed = this.getRandom()
+      this.waiting = true
+      return new Promise((resolve, reject) => {
+        resolve(this.genWallet(seed))
+      }).then((w) => {
+        this.one = w
+        this.waiting = false
+      })
+    },
+    onBulk (e) {
       e.target.blur()
       let seed = 0
       if (this.waiting) return
@@ -216,15 +238,10 @@ export default {
       }
       this.waiting = true
       setTimeout(() => {
-        if (this.page) {
-          this.genWallets(seed, 99).then((wallets) => {
-            this.waiting = false
-            this.bulk = wallets
-          })
-        } else {
-          this.one = this.genWallet(seed)
+        this.genWallets(seed, 99).then((wallets) => {
           this.waiting = false
-        }
+          this.bulk = wallets
+        })
       }, 100)
     },
     pageClick (i, e) {
